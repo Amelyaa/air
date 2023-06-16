@@ -6,8 +6,8 @@ function runTests() {
     const testResults = []
 
     /////////////////////////////
-    const command = `node ${exerciseName}.js "Crevette magique dans la mer des étoiles" "la"`
-    const expectedOutput = "Crevette magique dans \n mer des étoiles\n"
+    const command = `node ${exerciseName}.js "Je" "test "des" "trucs " "`
+    const expectedOutput = "Je test des trucs\n"
     /////////////////////////////
 
     const result = spawnSync(command, { shell: true, encoding: 'utf-8' })
