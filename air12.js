@@ -1,60 +1,40 @@
-const fs = require('fs')
-
-// Tableau pour stocker les résultats de chaque exercice
-const exerciseResults = []
-
-// Fonction pour imprimer les résultats des tests avec les couleurs
-function printColoredStatus(status) {
-    if (status === 'success') {
-        return '\x1b[32m' + status + '\x1b[0m' // Vert pour succès
-    } else {
-        return '\x1b[31m' + status + '\x1b[0m' // Rouge pour échec
+const displayError = (args) => {
+    if (args.length === 0) {
+        console.log("Erreur : Le programme nécessite au moins un argument (une liste de nombres).");
+        process.exit(1)
     }
 }
 
-
-// Boucle pour exécuter les tests pour les exercices de air00 à air10
-for (let i = 0; i <= 3; i++) {
-    const exerciseName = `air${i.toString().padStart(2, '0')}`
-    const testFilePath = `./test/${exerciseName}.test.js`
-
-    if (fs.existsSync(testFilePath)) {
-        const runTests = require(testFilePath)
-        const results = runTests()
-
-        const totalTests = results.length
-        let totalSuccess = 0
-
-        results.forEach((testResult, index) => {
-            const testIndex = index + 1;
-            const status = testResult.success ? 'success' : 'failure'
-            const coloredStatus = printColoredStatus(status)
-            console.log(`${exerciseName} (${testIndex}/${totalTests}) [${testResult.test}] : ${coloredStatus}`)
-
-            if (testResult.success) {
-                totalSuccess++;
-            }
-        })
-
-        exerciseResults.push({
-            exercise: exerciseName,
-            totalTests,
-            totalSuccess
-        })
-
-        // console.log(`\nTests completed for ${exerciseName}\n`);
-    } else {
-        console.log(`Tests not found for ${exerciseName}\n`)
+const quickSort = (array) => {
+    if (!Array.isArray(array)) {
+        console.log("Erreur : L'argument doit être une liste de nombres.")
+        process.exit(1)
     }
+
+    if (array.length <= 1) {
+        return array
+    }
+
+    const pivot = array[array.length - 1]
+    const leftArray = []
+    const rightArray = []
+
+    for (let i = 0; i < array.length - 1; i++) {
+        if (array[i] < pivot) {
+            leftArray.push(array[i])
+        } else {
+            rightArray.push(array[i])
+        }
+    }
+
+    return [...quickSort(leftArray), pivot, ...quickSort(rightArray)]
 }
 
-// Calcul du total global des succès
-let globalTotalTests = 0
-let globalTotalSuccess = 0
+const args = process.argv.slice(2)
 
-exerciseResults.forEach((result) => {
-    globalTotalTests += result.totalTests
-    globalTotalSuccess += result.totalSuccess
-})
+displayError(args)
 
-console.log(`Total success: (${globalTotalSuccess}/${globalTotalTests})`)
+const numbers = args.map((arg) => parseInt(arg))
+const sortedArray = quickSort(numbers)
+
+console.log(sortedArray.join(" "))

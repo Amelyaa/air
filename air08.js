@@ -1,29 +1,21 @@
 const displayError = (args) => {
-    if (args.length === 0) {
-        console.log("Erreur : Le programme nécessite au moins un argument (un tableau).")
-        process.exit(1)
-    }
-
-    if (!Array.isArray(args)) {
-        console.log("Erreur : L'argument doit être un tableau.")
+    if (args.length < 3 || !args.includes("fusion")) {
+        console.log("Erreur : Le programme nécessite au moins trois arguments et doit inclure le mot clé 'fusion' pour séparer les deux listes d'entiers triées.")
         process.exit(1)
     }
 }
 
-const rotateLeft = (array) => {
-    if (array.length < 2) {
-        return array
-    }
-
-    const firstElement = array.shift()
-    array.push(firstElement)
-
-    return array
+const sortedFusion = (array1, array2) => {
+    return [...array1, ...array2].sort((a, b) => a - b)
 }
 
 const args = process.argv.slice(2)
 
 displayError(args)
 
-const newArray = rotateLeft(args)
-console.log(newArray.join(", "))
+const fusionIndex = args.indexOf("fusion")
+const array1 = args.slice(0, fusionIndex).map(Number)
+const array2 = args.slice(fusionIndex + 1).map(Number)
+
+const newArray = sortedFusion(array1, array2)
+console.log(newArray.join(" "))
