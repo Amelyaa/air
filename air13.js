@@ -14,7 +14,7 @@ function printColoredStatus(status) {
 
 
 // Boucle pour exécuter les tests pour les exercices de air00 à air10
-for (let i = 0; i <= 7; i++) {
+for (let i = 0; i <= 10; i++) {
     const exerciseName = `air${i.toString().padStart(2, '0')}`
     const testFilePath = `./test/${exerciseName}.test.js`
 
