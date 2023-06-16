@@ -6,10 +6,10 @@ function runTests() {
     const testResults = []
 
     /////////////////////////////
-    const command = `node ${exerciseName}.js "Bonjour les gars"`
-    const expectedOutput = "Bonjour\nles\ngars\n"
+    const command = `node ${exerciseName}.js "Crevette magique dans la mer des étoiles" "la"`
+    const expectedOutput = "Crevette magique dans \n mer des étoiles\n"
     /////////////////////////////
-
+    
     const result = spawnSync(command, { shell: true, encoding: 'utf-8' })
 
     if (fs.existsSync(`${exerciseName}.js`)) {
