@@ -3,6 +3,16 @@ const fs = require('fs')
 // Tableau pour stocker les résultats de chaque exercice
 const exerciseResults = []
 
+// Fonction pour imprimer les résultats des tests avec les couleurs
+function printColoredStatus(status) {
+    if (status === 'success') {
+        return '\x1b[32m' + status + '\x1b[0m' // Vert pour succès
+    } else {
+        return '\x1b[31m' + status + '\x1b[0m' // Rouge pour échec
+    }
+}
+
+
 // Boucle pour exécuter les tests pour les exercices de air00 à air10
 for (let i = 0; i <= 3; i++) {
     const exerciseName = `air${i.toString().padStart(2, '0')}`
@@ -18,7 +28,8 @@ for (let i = 0; i <= 3; i++) {
         results.forEach((testResult, index) => {
             const testIndex = index + 1;
             const status = testResult.success ? 'success' : 'failure'
-            console.log(`${exerciseName} (${testIndex}/${totalTests}) [${testResult.test}] : ${status}`)
+            const coloredStatus = printColoredStatus(status)
+            console.log(`${exerciseName} (${testIndex}/${totalTests}) [${testResult.test}] : ${coloredStatus}`)
 
             if (testResult.success) {
                 totalSuccess++;
